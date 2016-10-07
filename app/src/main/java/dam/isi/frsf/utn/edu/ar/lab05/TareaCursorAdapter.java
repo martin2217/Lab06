@@ -50,7 +50,7 @@ public class TareaCursorAdapter extends CursorAdapter {
         // Referencias UI.
         TextView nombre = (TextView) view.findViewById(R.id.tareaTitulo);
         TextView tiempoAsignado = (TextView) view.findViewById(R.id.tareaMinutosAsignados);
-        TextView tiempoTrabajado = (TextView) view.findViewById(R.id.tareaMinutosTrabajados);
+        final TextView tiempoTrabajado = (TextView) view.findViewById(R.id.tareaMinutosTrabajados);
         TextView prioridad = (TextView) view.findViewById(R.id.tareaPrioridad);
         TextView responsable = (TextView) view.findViewById(R.id.tareaResponsable);
         CheckBox finalizada = (CheckBox) view.findViewById(R.id.tareaFinalizada);
@@ -59,19 +59,25 @@ public class TareaCursorAdapter extends CursorAdapter {
         final Button btnEditar = (Button) view.findViewById(R.id.tareaBtnEditarDatos);
 
         final ToggleButton btnEstado = (ToggleButton) view.findViewById(R.id.tareaBtnTrabajando);
+
         // Medidor del tiempo trabajado
         final long[] tiempo_inicio = new long[1];
+        btnEstado.setTag(cursor.getInt(cursor.getColumnIndex("_id")));
         btnEstado.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
                 if (btnEstado.isChecked()) {
                     tiempo_inicio[0] = Long.valueOf(System.currentTimeMillis());
                 } else {
                     // Trabajado en el último intervalo
-                    Long trabajado = 60*(Long.valueOf(System.currentTimeMillis()) - tiempo_inicio[0])/5000;
+                    String trabajado = String.valueOf(600*(Long.valueOf(System.currentTimeMillis()) - tiempo_inicio[0])/5000);
 
-                    // Guardarlo en base de datos?? o en modelo.Tarea?
+                    // Guardarlo en base de datos
+                    final Integer idTarea = (Integer) view.getTag();
+                    //myDao.actualizarTiempo(trabajado, idTarea);
+
                     // Mostrarlo en pantalla
+                    tiempoTrabajado.setText(trabajado);
 
                 }
             }
