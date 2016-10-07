@@ -57,7 +57,25 @@ public class TareaCursorAdapter extends CursorAdapter {
 
         final Button btnFinalizar = (Button) view.findViewById(R.id.tareaBtnFinalizada);
         final Button btnEditar = (Button) view.findViewById(R.id.tareaBtnEditarDatos);
-        ToggleButton btnEstado = (ToggleButton) view.findViewById(R.id.tareaBtnTrabajando);
+
+        final ToggleButton btnEstado = (ToggleButton) view.findViewById(R.id.tareaBtnTrabajando);
+        // Medidor del tiempo trabajado
+        final long[] tiempo_inicio = new long[1];
+        btnEstado.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (btnEstado.isChecked()) {
+                    tiempo_inicio[0] = Long.valueOf(System.currentTimeMillis());
+                } else {
+                    // Trabajado en el último intervalo
+                    Long trabajado = 60*(Long.valueOf(System.currentTimeMillis()) - tiempo_inicio[0])/5000;
+
+                    // Guardarlo en base de datos?? o en modelo.Tarea?
+                    // Mostrarlo en pantalla
+
+                }
+            }
+        });
 
         nombre.setText(cursor.getString(cursor.getColumnIndex(ProyectoDBMetadata.TablaTareasMetadata.TAREA)));
         Integer horasAsigandas = cursor.getInt(cursor.getColumnIndex(ProyectoDBMetadata.TablaTareasMetadata.HORAS_PLANIFICADAS));
