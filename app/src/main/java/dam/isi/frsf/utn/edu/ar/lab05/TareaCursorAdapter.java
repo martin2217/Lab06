@@ -74,7 +74,7 @@ public class TareaCursorAdapter extends CursorAdapter {
 
                     // Guardarlo en base de datos
                     final Integer idTarea = (Integer) view.getTag();
-                    //myDao.actualizarTiempo(trabajado, idTarea);
+                    myDao.actualizarTiempo(trabajado, idTarea);
 
                     // Mostrarlo en pantalla
                     tiempoTrabajado.setText(trabajado);
