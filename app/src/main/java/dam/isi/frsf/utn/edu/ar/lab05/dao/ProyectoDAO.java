@@ -81,7 +81,13 @@ public class ProyectoDAO {
     }
 
     public void borrarTarea(Tarea t){
-
+       // (new SQLiteDatabase()).delete()
+    }
+    public void actualizarTiempo(String tiempo, Integer id){
+        SQLiteDatabase mydb =dbHelper.getWritableDatabase();
+        ContentValues valores = new ContentValues();
+        valores.put(ProyectoDBMetadata.TablaTareasMetadata.MINUTOS_TRABAJADOS,tiempo);
+        mydb.update(ProyectoDBMetadata.TABLA_TAREAS, valores, "_id=?", new String[]{id.toString()});
     }
 
     public List<Prioridad> listarPrioridades(){
