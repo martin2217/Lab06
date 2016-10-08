@@ -94,8 +94,13 @@ public class ProyectoDAO {
         return null;
     }
 
-    public List<Usuario> listarUsuarios(){
-        return null;
+    public Cursor listarUsuarios(){
+        Cursor cursorUsuario= db.rawQuery("Select "+ ProyectoDBMetadata.TablaUsuariosMetadata._ID+" FROM "+ProyectoDBMetadata.TABLA_USUARIOS, null);
+        Integer idUsuario= 0;
+        if (cursorUsuario.moveToFirst()){
+            idUsuario=cursorUsuario.getInt(0);
+        }
+        return cursorUsuario;
     }
 
     public void finalizar(Integer idTarea){
