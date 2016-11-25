@@ -38,8 +38,7 @@ public class TareaCursorAdapter extends CursorAdapter {
     public View newView(Context context, Cursor cursor, ViewGroup viewGroup) {
         inflador = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View vista = inflador.inflate(R.layout.fila_tarea, viewGroup, false);
-        return vista;
+        return inflador.inflate(R.layout.fila_tarea, viewGroup, false);
     }
 
     @Override
@@ -67,10 +66,10 @@ public class TareaCursorAdapter extends CursorAdapter {
             @Override
             public void onClick(View view) {
                 if (btnEstado.isChecked()) {
-                    tiempo_inicio[0] = Long.valueOf(System.currentTimeMillis());
+                    tiempo_inicio[0] = System.currentTimeMillis();
                 } else {
                     // Trabajado en el último intervalo
-                    String trabajado = String.valueOf(600*(Long.valueOf(System.currentTimeMillis()) - tiempo_inicio[0])/5000);
+                    String trabajado = String.valueOf(600*(System.currentTimeMillis() - tiempo_inicio[0])/5000);
 
                     // Guardarlo en base de datos
                     final Integer idTarea = (Integer) view.getTag();
