@@ -68,26 +68,41 @@ public class TareaCursorAdapter extends CursorAdapter {
                 if (btnEstado.isChecked()) {
                     tiempo_inicio[0] = System.currentTimeMillis();
                 } else {
+
+                    final Integer idTarea = (Integer) view.getTag();
+
                     // Trabajado en el último intervalo
-                    String trabajado = String.valueOf(600*(System.currentTimeMillis() - tiempo_inicio[0])/5000);
+                    long tiempoActual = System.currentTimeMillis();
+                    long tiempoTrabajadoActual = (12*((tiempoActual - tiempo_inicio[0])/1000))/60;
+                    int tiempoTrabajadoBD = 0;
+
+                    Cursor cursorAux = myDao.getTarea(idTarea);
+
+                   if (cursorAux.moveToFirst()) { // si hay registros entra y recorre, en este caso hay uno
+                        do {
+                            tiempoTrabajadoBD = Integer.parseInt(cursorAux.getString(0));
+                        } while(cursorAux.moveToNext());
+                    }
+
+                    Integer tiempoTotalTrabajadoActual = tiempoTrabajadoBD + (int) tiempoTrabajadoActual;
+
+                    String trabajado = String.valueOf(tiempoTotalTrabajadoActual);
 
                     // Guardarlo en base de datos
-                    final Integer idTarea = (Integer) view.getTag();
                     myDao.actualizarTiempo(trabajado, idTarea);
 
                     // Mostrarlo en pantalla
-                    tiempoTrabajado.setText(trabajado);
-
+                    tiempoTrabajado.setText(trabajado + " ' de ");
                 }
             }
         });
 
         nombre.setText(cursor.getString(cursor.getColumnIndex(ProyectoDBMetadata.TablaTareasMetadata.TAREA)));
         Integer horasAsigandas = cursor.getInt(cursor.getColumnIndex(ProyectoDBMetadata.TablaTareasMetadata.HORAS_PLANIFICADAS));
-        tiempoAsignado.setText(horasAsigandas * 60 + " minutos");
+        tiempoAsignado.setText(horasAsigandas * 60 + " '");
 
         Integer minutosAsigandos = cursor.getInt(cursor.getColumnIndex(ProyectoDBMetadata.TablaTareasMetadata.MINUTOS_TRABAJADOS));
-        tiempoTrabajado.setText(minutosAsigandos + " minutos");
+        tiempoTrabajado.setText(minutosAsigandos + " ' de ");
         String p = cursor.getString(cursor.getColumnIndex(ProyectoDBMetadata.TablaPrioridadMetadata.PRIORIDAD_ALIAS));
         prioridad.setText(p);
         responsable.setText(cursor.getString(cursor.getColumnIndex(ProyectoDBMetadata.TablaUsuariosMetadata.USUARIO_ALIAS)));

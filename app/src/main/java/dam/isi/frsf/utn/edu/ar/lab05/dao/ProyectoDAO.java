@@ -83,6 +83,21 @@ public class ProyectoDAO {
     public void borrarTarea(Tarea t){
         (dbHelper.getWritableDatabase()).delete(ProyectoDBMetadata.TABLA_TAREAS,"_id=?",new String[]{t.getId().toString()});
     }
+
+    public Cursor getTarea(Integer id){
+        open();
+        String[] campos = new String[]{
+                ProyectoDBMetadata.TablaTareasMetadata.MINUTOS_TRABAJADOS,
+                ProyectoDBMetadata.TablaTareasMetadata.PRIORIDAD,
+                ProyectoDBMetadata.TablaTareasMetadata.RESPONSABLE,
+                ProyectoDBMetadata.TablaTareasMetadata.PROYECTO
+        };
+
+        Cursor cursor = db.query(ProyectoDBMetadata.TABLA_TAREAS, campos, "_id="+id, null, null, null, null);
+
+        return cursor;
+    }
+
     public void actualizarTiempo(String tiempo, Integer id){
         SQLiteDatabase mydb =dbHelper.getWritableDatabase();
         ContentValues valores = new ContentValues();
