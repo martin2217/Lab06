@@ -1,0 +1,19 @@
+1- Go to your platform-tools folder in a command prompt
+
+2- Enter the command adb devices to get the list of your devices
+
+C:\Android\adt-bundle-windows-x86_64\sdk\platform-tools>adb devices
+List of devices attached
+emulator-xxxx   device
+3- Connect a shell to your device:
+
+C:\Android\adt-bundle-windows-x86_64\sdk\platform-tools>adb -s emulator-xxxx shell
+4- Navigate to the folder containing your db file:
+
+cd data/data/<your-package-name>/databases/
+5- run sqlite3 to connect to your db:
+
+sqlite3 <your-db-name>.db
+6- run sqlite3 commands that you like eg:
+
+Select * from table1 where ...;
