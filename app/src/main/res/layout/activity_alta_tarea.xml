@@ -8,7 +8,8 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="dam.isi.frsf.utn.edu.ar.lab05.AltaTareaActivity">
+    tools:context="dam.isi.frsf.utn.edu.ar.lab05.AltaTareaActivity"
+    android:weightSum="1">
 
     <TextView
         android:layout_width="match_parent"
@@ -21,7 +22,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Descripcion"
+        android:text="Descripción"
         android:id="@+id/textView2"
         android:layout_marginEnd="70dp" />
 
@@ -70,20 +71,41 @@
     <Spinner
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/spinner" />
+        android:id="@+id/responsablesSpinner"
+        android:layout_weight="0.11" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Proyecto"
+        android:id="@+id/textView6" />
+
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/proyectosSpinner"
+        android:layout_weight="0.11" />
+
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Guardar"
-        android:id="@+id/btnGuardar" />
-    <Button
-        android:layout_width="wrap_content"
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="Guardar"
+            android:id="@+id/btnGuardarAAT"
+            android:layout_weight="1" />
+
+        <Button
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Cancelar"
-        android:id="@+id/btnCanelar" />
-</LinearLayout>
+        android:id="@+id/btnCancelarAAT"
+            android:elevation="0dp"
+            android:textAlignment="center"
+            android:layout_weight="1" />
     </LinearLayout>
+</LinearLayout>

@@ -72,8 +72,18 @@ public class ProyectoDAO {
         return cursor;
     }
 
-    public void nuevaTarea(Tarea t){
+    public void nuevaTarea(Tarea tarea){
+        db = dbHelper.getWritableDatabase();
+        // Create a new map of values, where column names are the keys
+        ContentValues valores = new ContentValues();
+        valores.put(ProyectoDBMetadata.TablaTareasMetadata.TAREA, tarea.getDescripcion());
+        valores.put(ProyectoDBMetadata.TablaTareasMetadata.HORAS_PLANIFICADAS, tarea.getHorasEstimadas());
+        valores.put(ProyectoDBMetadata.TablaTareasMetadata.MINUTOS_TRABAJADOS, tarea.getMinutosTrabajados());
+        valores.put(ProyectoDBMetadata.TablaTareasMetadata.PRIORIDAD, tarea.getPrioridad().getId());
+        valores.put(ProyectoDBMetadata.TablaTareasMetadata.RESPONSABLE, tarea.getResponsable().getId());
+        valores.put(ProyectoDBMetadata.TablaTareasMetadata.PROYECTO, tarea.getProyecto().getId());
 
+        db.insert(ProyectoDBMetadata.TABLA_TAREAS, null, valores);
     }
 
     public void actualizarTarea(Tarea t){
@@ -82,6 +92,28 @@ public class ProyectoDAO {
 
     public void borrarTarea(Tarea t){
         (dbHelper.getWritableDatabase()).delete(ProyectoDBMetadata.TABLA_TAREAS,"_id=?",new String[]{t.getId().toString()});
+    }
+
+    public Cursor getProyecto(Integer id){
+        open();
+        String[] campos = new String[]{
+                ProyectoDBMetadata.TablaProyectoMetadata.TITULO
+        };
+
+        Cursor cursor = db.query(ProyectoDBMetadata.TABLA_PROYECTO, campos, "_id=" + id, null, null, null, null);
+
+        return cursor;
+    }
+
+    public Cursor getProyecto(String titulo){
+        open();
+        String[] campos = new String[]{
+                ProyectoDBMetadata.TablaProyectoMetadata._ID
+        };
+
+        Cursor cursor = db.query(ProyectoDBMetadata.TABLA_PROYECTO, campos, "titulo=" + titulo, null, null, null, null);
+
+        return cursor;
     }
 
     public Cursor getTarea(Integer id){
@@ -93,7 +125,29 @@ public class ProyectoDAO {
                 ProyectoDBMetadata.TablaTareasMetadata.PROYECTO
         };
 
-        Cursor cursor = db.query(ProyectoDBMetadata.TABLA_TAREAS, campos, "_id="+id, null, null, null, null);
+        Cursor cursor = db.query(ProyectoDBMetadata.TABLA_TAREAS, campos, "_id=" + id, null, null, null, null);
+
+        return cursor;
+    }
+
+    public Cursor getUsuario(Integer id){
+        open();
+        String[] campos = new String[]{
+                ProyectoDBMetadata.TablaUsuariosMetadata.USUARIO
+        };
+
+        Cursor cursor = db.query(ProyectoDBMetadata.TABLA_USUARIOS, campos, "_id=" + id, null, null, null, null);
+
+        return cursor;
+    }
+
+    public Cursor getUsuario(String usuario){
+        open();
+        String[] campos = new String[]{
+                ProyectoDBMetadata.TablaUsuariosMetadata._ID
+        };
+
+        Cursor cursor = db.query(ProyectoDBMetadata.TABLA_USUARIOS, campos, "usuario=" + usuario, null, null, null, null);
 
         return cursor;
     }
@@ -111,9 +165,16 @@ public class ProyectoDAO {
 
     public Cursor listarUsuarios(){
         open();
-        Cursor cursorUsuario= db.rawQuery("SELECT "+ ProyectoDBMetadata.TablaUsuariosMetadata.USUARIO+
+        Cursor cursorUsuario= db.rawQuery("SELECT "+ ProyectoDBMetadata.TablaUsuariosMetadata.USUARIO +
                 " FROM "+ProyectoDBMetadata.TABLA_USUARIOS, null);
         return cursorUsuario;
+    }
+
+    public Cursor listarProyectos(){
+        open();
+        Cursor cursorAux = db.rawQuery("SELECT "+ ProyectoDBMetadata.TablaProyectoMetadata.TITULO +
+                " FROM "+ProyectoDBMetadata.TABLA_PROYECTO, null);
+        return cursorAux;
     }
 
     public void finalizar(Integer idTarea){
