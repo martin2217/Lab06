@@ -32,6 +32,7 @@ public class AltaTareaActivity extends AppCompatActivity {
     private ProyectoDAO dao;
     private Spinner responsables;
     private Spinner proyectos;
+    private TextView textPrioridad;
     private int progresoSeekBar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,11 +43,12 @@ public class AltaTareaActivity extends AppCompatActivity {
         descripcion =(EditText) findViewById(R.id.editText);
         horas_estimadas =(EditText) findViewById(R.id.editText2);
         prioridad =(SeekBar) findViewById(R.id.seekBar);
+        textPrioridad = (TextView) findViewById(R.id.text_prioridad);
         responsables = (Spinner) findViewById(R.id.responsablesSpinner);
         proyectos = (Spinner) findViewById(R.id.proyectosSpinner);
         cursorUsuarios = dao.listarUsuarios();
         cursorProyectos = dao.listarProyectos();
-
+        textPrioridad.setText("Prioridad: " + 1);
 
         // *** Responsables ***
         List<String> responsablesArray = new ArrayList<String>();
@@ -75,27 +77,26 @@ public class AltaTareaActivity extends AppCompatActivity {
         proyectosAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         proyectos.setAdapter(proyectosAdapter);
 
-
+        // *** Prioridad ***
         prioridad.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            int progresoBar = 0;
 
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progresValue, boolean fromUser) {
-                progresoSeekBar = progresValue;
-                Toast.makeText(getApplicationContext(), progresoSeekBar, Toast.LENGTH_SHORT).show();
+            public void onProgressChanged(SeekBar seekBar, int progreso, boolean fromUser){
+                progresoBar = progreso;
             }
 
-            @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
-                progresoSeekBar=0;
-                //Toast.makeText(getApplicationContext(), "", Toast.LENGTH_SHORT).show();
+
             }
 
-            @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                //Toast.makeText(getApplicationContext(), "", Toast.LENGTH_SHORT).show();
+                progresoSeekBar = progresoBar;
+                textPrioridad.setText("Prioridad: " + progresoSeekBar);
             }
         });
 
+
+        // *** Guardar ***
         final Button btnGuardarAAT = (Button) findViewById(R.id.btnGuardarAAT);
         btnGuardarAAT.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -130,6 +131,8 @@ public class AltaTareaActivity extends AppCompatActivity {
                     } while(cursorUsuario.moveToNext());
                 }
                 nuevaTarea.setResponsable(auxUsuario);
+
+                dao.nuevaTarea(nuevaTarea);
 
                 finish();
             }

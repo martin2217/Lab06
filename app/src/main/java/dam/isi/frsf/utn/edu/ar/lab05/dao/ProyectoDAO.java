@@ -111,7 +111,7 @@ public class ProyectoDAO {
                 ProyectoDBMetadata.TablaProyectoMetadata._ID
         };
 
-        Cursor cursor = db.query(ProyectoDBMetadata.TABLA_PROYECTO, campos, "titulo=" + titulo, null, null, null, null);
+        Cursor cursor = db.query(ProyectoDBMetadata.TABLA_PROYECTO, campos, "titulo='" + titulo + "'", null, null, null, null);
 
         return cursor;
     }
@@ -147,7 +147,7 @@ public class ProyectoDAO {
                 ProyectoDBMetadata.TablaUsuariosMetadata._ID
         };
 
-        Cursor cursor = db.query(ProyectoDBMetadata.TABLA_USUARIOS, campos, "usuario=" + usuario, null, null, null, null);
+        Cursor cursor = db.query(ProyectoDBMetadata.TABLA_USUARIOS, campos, "nombre='" + usuario + "'", null, null, null, null);
 
         return cursor;
     }

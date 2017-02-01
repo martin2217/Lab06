@@ -51,7 +51,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="Prioridad"
-        android:id="@+id/textView4" />
+        android:id="@+id/text_prioridad" />
 
     <SeekBar
         android:layout_width="match_parent"
