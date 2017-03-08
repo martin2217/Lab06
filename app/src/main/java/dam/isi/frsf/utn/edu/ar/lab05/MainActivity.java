@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.desvios) {
-            Intent intActAlta= new Intent(MainActivity.this,AltaTareaActivity.class);
+            Intent intActAlta= new Intent(MainActivity.this, DesviosActivity.class);
             intActAlta.putExtra("ID_TAREA", 0);
             startActivity(intActAlta);
         }
