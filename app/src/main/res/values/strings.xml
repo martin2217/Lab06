@@ -1,4 +1,4 @@
 <resources>
     <string name="app_name">Laboratorio05</string>
-    <string name="action_settings">Settings</string>
+    <string name="desvios">Analizar desvíos</string>
 </resources>

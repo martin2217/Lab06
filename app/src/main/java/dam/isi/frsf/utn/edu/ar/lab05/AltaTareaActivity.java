@@ -3,20 +3,20 @@ package dam.isi.frsf.utn.edu.ar.lab05;
 import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.SeekBar;
-import android.widget.SimpleCursorAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import dam.isi.frsf.utn.edu.ar.lab05.dao.ProyectoDAO;
+import dam.isi.frsf.utn.edu.ar.lab05.dao.ProyectoDBMetadata;
 import dam.isi.frsf.utn.edu.ar.lab05.modelo.Prioridad;
 import dam.isi.frsf.utn.edu.ar.lab05.modelo.Proyecto;
 import dam.isi.frsf.utn.edu.ar.lab05.modelo.Tarea;
@@ -33,12 +33,30 @@ public class AltaTareaActivity extends AppCompatActivity {
     private Spinner responsables;
     private Spinner proyectos;
     private TextView textPrioridad;
-    private int progresoSeekBar;
+
+    private int origen; // 1 para alta, 2 para editar
+    public static final int ALTA=1;
+    public static final int EDITAR=2;
+    private Integer idTarea;
+
+    private Cursor tareaCursor;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alta_tarea);
         dao = new ProyectoDAO(this);
+
+        idTarea=(Integer) getIntent().getExtras().get("ID_TAREA");
+
+        if(idTarea==0){
+            origen=ALTA;
+        }
+        else {
+            origen=EDITAR;
+            tareaCursor =dao.getTarea(idTarea);
+            tareaCursor.moveToFirst();
+        }
 
         descripcion =(EditText) findViewById(R.id.editText);
         horas_estimadas =(EditText) findViewById(R.id.editText2);
@@ -48,7 +66,7 @@ public class AltaTareaActivity extends AppCompatActivity {
         proyectos = (Spinner) findViewById(R.id.proyectosSpinner);
         cursorUsuarios = dao.listarUsuarios();
         cursorProyectos = dao.listarProyectos();
-        textPrioridad.setText("Prioridad: " + 1);
+
 
         // *** Responsables ***
         List<String> responsablesArray = new ArrayList<String>();
@@ -77,12 +95,30 @@ public class AltaTareaActivity extends AppCompatActivity {
         proyectosAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         proyectos.setAdapter(proyectosAdapter);
 
+
+        final int[] progresoBar = {0};
+
+        if (origen==ALTA) {
+            textPrioridad.setText("Prioridad: 0");
+        }
+        else {
+            int prog = tareaCursor.getInt(tareaCursor.getColumnIndex("ID_PRIORIDAD"));
+            textPrioridad.setText("Prioridad: " + prog);
+            progresoBar[0]=prog;
+            prioridad.setProgress(prog);
+
+            descripcion.setText(tareaCursor.getString(tareaCursor.getColumnIndex(ProyectoDBMetadata.TablaTareasMetadata.TAREA)));
+            Integer horasAsignadas = tareaCursor.getInt(tareaCursor.getColumnIndex(ProyectoDBMetadata.TablaTareasMetadata.HORAS_PLANIFICADAS));
+            horas_estimadas.setText(String.valueOf(horasAsignadas));
+        }
+
+
         // *** Prioridad ***
         prioridad.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            int progresoBar = 0;
 
             public void onProgressChanged(SeekBar seekBar, int progreso, boolean fromUser){
-                progresoBar = progreso;
+                progresoBar[0] = progreso;
+                textPrioridad.setText("Prioridad: " + progreso);
             }
 
             public void onStartTrackingTouch(SeekBar seekBar) {
@@ -90,8 +126,6 @@ public class AltaTareaActivity extends AppCompatActivity {
             }
 
             public void onStopTrackingTouch(SeekBar seekBar) {
-                progresoSeekBar = progresoBar;
-                textPrioridad.setText("Prioridad: " + progresoSeekBar);
             }
         });
 
@@ -101,15 +135,18 @@ public class AltaTareaActivity extends AppCompatActivity {
         btnGuardarAAT.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-
                 Tarea nuevaTarea = new Tarea();
-                nuevaTarea.setDescripcion(descripcion.getText().toString());
-                nuevaTarea.setHorasEstimadas(Integer.parseInt(horas_estimadas.getText().toString()));
+                if (TextUtils.isEmpty(descripcion.getText().toString().trim()))
+                    nuevaTarea.setDescripcion("Sin descripcion");
+                else nuevaTarea.setDescripcion(descripcion.getText().toString());
+                if (TextUtils.isEmpty(horas_estimadas.getText().toString().trim()))
+                    nuevaTarea.setHorasEstimadas(0);
+                else nuevaTarea.setHorasEstimadas(Integer.parseInt(horas_estimadas.getText().toString()));
                 nuevaTarea.setMinutosTrabajados(0);
                 nuevaTarea.setFinalizada(false);
 
                 Prioridad auxPrioridad = new Prioridad();
-                auxPrioridad.setId(progresoSeekBar);
+                auxPrioridad.setId(progresoBar[0]);
                 nuevaTarea.setPrioridad(auxPrioridad);
 
                 String tituloProyecto = proyectos.getSelectedItem().toString();
@@ -132,8 +169,16 @@ public class AltaTareaActivity extends AppCompatActivity {
                 }
                 nuevaTarea.setResponsable(auxUsuario);
 
-                dao.nuevaTarea(nuevaTarea);
+                if (origen==ALTA){
+                    dao.nuevaTarea(nuevaTarea);
+                }
+                else {
+                    nuevaTarea.setId(idTarea);
+                    dao.actualizarTarea(nuevaTarea); // En realidad no es nueva :p
+                }
 
+                /*Intent i= new Intent();
+                setResult(MainActivity.RESULT_OK, i);*/
                 finish();
             }
         });
@@ -144,5 +189,7 @@ public class AltaTareaActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+
     }
 }

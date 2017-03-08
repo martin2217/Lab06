@@ -31,7 +31,7 @@ public class TareaCursorAdapter extends CursorAdapter {
     public TareaCursorAdapter(Context contexto, Cursor c, ProyectoDAO dao) {
         super(contexto, c, false);
         myDao = dao;
-        this.contexto = contexto;
+        this.contexto =contexto;
     }
 
     @Override
@@ -54,8 +54,9 @@ public class TareaCursorAdapter extends CursorAdapter {
         TextView responsable = (TextView) view.findViewById(R.id.tareaResponsable);
         CheckBox finalizada = (CheckBox) view.findViewById(R.id.tareaFinalizada);
 
-        final Button btnFinalizar = (Button) view.findViewById(R.id.tareaBtnFinalizada);
-        final Button btnEditar = (Button) view.findViewById(R.id.tareaBtnEditarDatos);
+        Button btnFinalizar = (Button) view.findViewById(R.id.tareaBtnFinalizada);
+        Button btnEditar = (Button) view.findViewById(R.id.tareaBtnEditarDatos);
+        Button btnEliminar = (Button) view.findViewById(R.id.btnTareaEliminar);
 
         final ToggleButton btnEstado = (ToggleButton) view.findViewById(R.id.tareaBtnTrabajando);
 
@@ -73,7 +74,7 @@ public class TareaCursorAdapter extends CursorAdapter {
 
                     // Trabajado en el último intervalo
                     long tiempoActual = System.currentTimeMillis();
-                    long tiempoTrabajadoActual = (12*((tiempoActual - tiempo_inicio[0])/1000))/60;
+                    long tiempoTrabajadoActual = (60*((tiempoActual - tiempo_inicio[0])/1000))/60;
                     int tiempoTrabajadoBD = 0;
 
                     Cursor cursorAux = myDao.getTarea(idTarea);
@@ -109,6 +110,10 @@ public class TareaCursorAdapter extends CursorAdapter {
         finalizada.setChecked(cursor.getInt(cursor.getColumnIndex(ProyectoDBMetadata.TablaTareasMetadata.FINALIZADA)) == 1);
         finalizada.setTextIsSelectable(false);
 
+        if(cursor.getInt(cursor.getColumnIndex(ProyectoDBMetadata.TablaTareasMetadata.FINALIZADA))==1) {
+            //desactivarBtn(btnFinalizar);
+        }
+
         btnEditar.setTag(cursor.getInt(cursor.getColumnIndex("_id")));
         btnEditar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -116,7 +121,7 @@ public class TareaCursorAdapter extends CursorAdapter {
                 final Integer idTarea = (Integer) view.getTag();
                 Intent intEditarAct = new Intent(contexto, AltaTareaActivity.class);
                 intEditarAct.putExtra("ID_TAREA", idTarea);
-                context.startActivity(intEditarAct);
+                contexto.startActivity(intEditarAct);
 
             }
         });
@@ -137,6 +142,30 @@ public class TareaCursorAdapter extends CursorAdapter {
                 backGroundUpdate.start();
             }
         });
+
+        btnEliminar.setTag(cursor.getInt(cursor.getColumnIndex("_id")));
+        btnEliminar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final Integer idTarea = (Integer) view.getTag();
+                Thread backGroundUpdate = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Log.d("LAB05-MAIN", "borar tarea : --- " + idTarea);
+                        myDao.borrarTarea(idTarea);
+                        handlerRefresh.sendEmptyMessage(1);
+                    }
+                });
+                backGroundUpdate.start();
+            }
+        });
+    }
+
+    private void desactivarBtn(Button btn){
+        btn.setAlpha(.5f);
+        btn.setClickable(false);
+        btn.setEnabled(false);
+        btn.setFocusable(false);
     }
 
     Handler handlerRefresh = new Handler(Looper.getMainLooper()) {

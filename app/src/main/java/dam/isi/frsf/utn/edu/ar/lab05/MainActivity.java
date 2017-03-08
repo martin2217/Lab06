@@ -1,5 +1,6 @@
 package dam.isi.frsf.utn.edu.ar.lab05;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
@@ -23,6 +24,10 @@ public class MainActivity extends AppCompatActivity {
     private ProyectoDAO proyectoDAO;
     private Cursor cursor;
     private TareaCursorAdapter tca;
+
+    private final int CODIGO_ORIGEN_ALTA=1;
+    private final int CODIGO_ORIGEN_EDITAR=2;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,10 +88,26 @@ public class MainActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        if (id == R.id.desvios) {
+            Intent intActAlta= new Intent(MainActivity.this,AltaTareaActivity.class);
+            intActAlta.putExtra("ID_TAREA", 0);
+            startActivity(intActAlta);
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        switch (requestCode) {
+            case CODIGO_ORIGEN_EDITAR:
+            case CODIGO_ORIGEN_ALTA:
+                // Resultado
+                if (resultCode == Activity.RESULT_OK) {
+                    tca.notifyDataSetChanged();
+                }
+                break;
+        }
     }
 }

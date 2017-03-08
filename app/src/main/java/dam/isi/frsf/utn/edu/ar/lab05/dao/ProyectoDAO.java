@@ -86,12 +86,23 @@ public class ProyectoDAO {
         db.insert(ProyectoDBMetadata.TABLA_TAREAS, null, valores);
     }
 
-    public void actualizarTarea(Tarea t){
-
+    public void actualizarTarea(Tarea tarea){
+        SQLiteDatabase mydb =dbHelper.getWritableDatabase();
+        ContentValues valores = new ContentValues();
+        valores.put(ProyectoDBMetadata.TablaTareasMetadata.TAREA, tarea.getDescripcion());
+        valores.put(ProyectoDBMetadata.TablaTareasMetadata.HORAS_PLANIFICADAS, tarea.getHorasEstimadas());
+        valores.put(ProyectoDBMetadata.TablaTareasMetadata.PRIORIDAD, tarea.getPrioridad().getId());
+        valores.put(ProyectoDBMetadata.TablaTareasMetadata.RESPONSABLE, tarea.getResponsable().getId());
+        valores.put(ProyectoDBMetadata.TablaTareasMetadata.PROYECTO, tarea.getProyecto().getId());
+        mydb.update(ProyectoDBMetadata.TABLA_TAREAS, valores, "_id=?", new String[]{tarea.getId().toString()});
     }
 
     public void borrarTarea(Tarea t){
         (dbHelper.getWritableDatabase()).delete(ProyectoDBMetadata.TABLA_TAREAS,"_id=?",new String[]{t.getId().toString()});
+    }
+
+    public void borrarTarea(int id){
+        (dbHelper.getWritableDatabase()).delete(ProyectoDBMetadata.TABLA_TAREAS,"_id=?",new String[]{Integer.toString(id)});
     }
 
     public Cursor getProyecto(Integer id){
@@ -122,7 +133,9 @@ public class ProyectoDAO {
                 ProyectoDBMetadata.TablaTareasMetadata.MINUTOS_TRABAJADOS,
                 ProyectoDBMetadata.TablaTareasMetadata.PRIORIDAD,
                 ProyectoDBMetadata.TablaTareasMetadata.RESPONSABLE,
-                ProyectoDBMetadata.TablaTareasMetadata.PROYECTO
+                ProyectoDBMetadata.TablaTareasMetadata.PROYECTO,
+                ProyectoDBMetadata.TablaTareasMetadata.TAREA,
+                ProyectoDBMetadata.TablaTareasMetadata.HORAS_PLANIFICADAS
         };
 
         Cursor cursor = db.query(ProyectoDBMetadata.TABLA_TAREAS, campos, "_id=" + id, null, null, null, null);

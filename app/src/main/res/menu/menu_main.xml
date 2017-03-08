@@ -3,8 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="dam.isi.frsf.utn.edu.ar.lab05.MainActivity">
     <item
-        android:id="@+id/action_settings"
+        android:id="@+id/desvios"
         android:orderInCategory="100"
-        android:title="@string/action_settings"
+        android:title="@string/desvios"
         app:showAsAction="never" />
 </menu>
