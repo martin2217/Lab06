@@ -1,12 +1,10 @@
-package dam.isi.frsf.utn.edu.ar.lab05;
+package dam.isi.frsf.utn.edu.ar.lab06;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -16,7 +14,8 @@ import android.view.MenuItem;
 import android.widget.ListView;
 
 
-import dam.isi.frsf.utn.edu.ar.lab05.dao.ProyectoDAO;
+import dam.isi.frsf.utn.edu.ar.lab06.R;
+import dam.isi.frsf.utn.edu.ar.lab06.dao.ProyectoDAO;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -51,25 +50,25 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        Log.d("LAB05-MAIN","en resume");
+        Log.d("LAB06-MAIN","en resume");
         proyectoDAO = new ProyectoDAO(MainActivity.this);
         proyectoDAO.open();
         cursor = proyectoDAO.listaTareas(1);
-        Log.d("LAB05-MAIN","mediol "+cursor.getCount());
+        Log.d("LAB06-MAIN","mediol "+cursor.getCount());
 
         tca = new TareaCursorAdapter(MainActivity.this,cursor,proyectoDAO);
         lvTareas.setAdapter(tca);
-        Log.d("LAB05-MAIN","fin resume");
+        Log.d("LAB06-MAIN","fin resume");
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        Log.d("LAB05-MAIN","on pausa");
+        Log.d("LAB06-MAIN","on pausa");
 
         if(cursor!=null) cursor.close();
         if(proyectoDAO!=null) proyectoDAO.close();
-        Log.d("LAB05-MAIN","fin on pausa");
+        Log.d("LAB06-MAIN","fin on pausa");
 
     }
 

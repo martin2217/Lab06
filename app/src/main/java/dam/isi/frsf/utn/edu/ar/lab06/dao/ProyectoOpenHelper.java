@@ -1,4 +1,4 @@
-package dam.isi.frsf.utn.edu.ar.lab05.dao;
+package dam.isi.frsf.utn.edu.ar.lab06.dao;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

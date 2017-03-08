@@ -1,4 +1,4 @@
-package dam.isi.frsf.utn.edu.ar.lab05;
+package dam.isi.frsf.utn.edu.ar.lab06;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

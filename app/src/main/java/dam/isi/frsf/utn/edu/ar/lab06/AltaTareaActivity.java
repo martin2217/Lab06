@@ -1,4 +1,4 @@
-package dam.isi.frsf.utn.edu.ar.lab05;
+package dam.isi.frsf.utn.edu.ar.lab06;
 
 import android.database.Cursor;
 import android.support.v7.app.AppCompatActivity;
@@ -15,12 +15,13 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-import dam.isi.frsf.utn.edu.ar.lab05.dao.ProyectoDAO;
-import dam.isi.frsf.utn.edu.ar.lab05.dao.ProyectoDBMetadata;
-import dam.isi.frsf.utn.edu.ar.lab05.modelo.Prioridad;
-import dam.isi.frsf.utn.edu.ar.lab05.modelo.Proyecto;
-import dam.isi.frsf.utn.edu.ar.lab05.modelo.Tarea;
-import dam.isi.frsf.utn.edu.ar.lab05.modelo.Usuario;
+import dam.isi.frsf.utn.edu.ar.lab06.R;
+import dam.isi.frsf.utn.edu.ar.lab06.dao.ProyectoDAO;
+import dam.isi.frsf.utn.edu.ar.lab06.dao.ProyectoDBMetadata;
+import dam.isi.frsf.utn.edu.ar.lab06.modelo.Prioridad;
+import dam.isi.frsf.utn.edu.ar.lab06.modelo.Proyecto;
+import dam.isi.frsf.utn.edu.ar.lab06.modelo.Tarea;
+import dam.isi.frsf.utn.edu.ar.lab06.modelo.Usuario;
 
 public class AltaTareaActivity extends AppCompatActivity {
 

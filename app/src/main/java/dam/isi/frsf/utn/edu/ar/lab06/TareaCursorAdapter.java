@@ -1,6 +1,5 @@
-package dam.isi.frsf.utn.edu.ar.lab05;
+package dam.isi.frsf.utn.edu.ar.lab06;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -17,8 +16,9 @@ import android.widget.CursorAdapter;
 import android.widget.TextView;
 import android.widget.ToggleButton;
 
-import dam.isi.frsf.utn.edu.ar.lab05.dao.ProyectoDAO;
-import dam.isi.frsf.utn.edu.ar.lab05.dao.ProyectoDBMetadata;
+import dam.isi.frsf.utn.edu.ar.lab06.R;
+import dam.isi.frsf.utn.edu.ar.lab06.dao.ProyectoDAO;
+import dam.isi.frsf.utn.edu.ar.lab06.dao.ProyectoDBMetadata;
 
 /**
  * Created by mdominguez on 06/10/16.
@@ -134,7 +134,7 @@ public class TareaCursorAdapter extends CursorAdapter {
                 Thread backGroundUpdate = new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        Log.d("LAB05-MAIN", "finalizar tarea : --- " + idTarea);
+                        Log.d("LAB06-MAIN", "finalizar tarea : --- " + idTarea);
                         myDao.finalizar(idTarea);
                         handlerRefresh.sendEmptyMessage(1);
                     }
@@ -151,7 +151,7 @@ public class TareaCursorAdapter extends CursorAdapter {
                 Thread backGroundUpdate = new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        Log.d("LAB05-MAIN", "borar tarea : --- " + idTarea);
+                        Log.d("LAB06-MAIN", "borar tarea : --- " + idTarea);
                         myDao.borrarTarea(idTarea);
                         handlerRefresh.sendEmptyMessage(1);
                     }

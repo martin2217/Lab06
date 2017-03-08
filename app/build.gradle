@@ -5,7 +5,7 @@ android {
     buildToolsVersion "24.0.2"
 
     defaultConfig {
-        applicationId "dam.isi.frsf.utn.edu.ar.lab05"
+        applicationId "dam.isi.frsf.utn.edu.ar.lab06"
         minSdkVersion 21
         targetSdkVersion 24
         versionCode 1

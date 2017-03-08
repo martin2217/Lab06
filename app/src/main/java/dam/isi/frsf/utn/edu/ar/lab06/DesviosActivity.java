@@ -1,4 +1,4 @@
-package dam.isi.frsf.utn.edu.ar.lab05;
+package dam.isi.frsf.utn.edu.ar.lab06;
 
 
 import android.content.Context;
@@ -11,7 +11,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.Checkable;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -19,8 +18,9 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
-import dam.isi.frsf.utn.edu.ar.lab05.dao.ProyectoDAO;
-import dam.isi.frsf.utn.edu.ar.lab05.dao.ProyectoDBMetadata;
+import dam.isi.frsf.utn.edu.ar.lab06.R;
+import dam.isi.frsf.utn.edu.ar.lab06.dao.ProyectoDAO;
+import dam.isi.frsf.utn.edu.ar.lab06.dao.ProyectoDBMetadata;
 
 public class DesviosActivity extends AppCompatActivity {
 

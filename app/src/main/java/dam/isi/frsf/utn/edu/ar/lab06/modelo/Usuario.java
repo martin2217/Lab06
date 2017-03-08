@@ -1,4 +1,4 @@
-package dam.isi.frsf.utn.edu.ar.lab05.modelo;
+package dam.isi.frsf.utn.edu.ar.lab06.modelo;
 
 /**
  * Created by mdominguez on 06/10/16.

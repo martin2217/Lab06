@@ -1,4 +1,4 @@
-package dam.isi.frsf.utn.edu.ar.lab05.dao;
+package dam.isi.frsf.utn.edu.ar.lab06.dao;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -8,9 +8,8 @@ import android.util.Log;
 
 import java.util.List;
 
-import dam.isi.frsf.utn.edu.ar.lab05.modelo.Prioridad;
-import dam.isi.frsf.utn.edu.ar.lab05.modelo.Tarea;
-import dam.isi.frsf.utn.edu.ar.lab05.modelo.Usuario;
+import dam.isi.frsf.utn.edu.ar.lab06.modelo.Prioridad;
+import dam.isi.frsf.utn.edu.ar.lab06.modelo.Tarea;
 
 /**
  * Created by mdominguez on 06/10/16.
@@ -67,7 +66,7 @@ public class ProyectoDAO {
         }
         cursorPry.close();
         Cursor cursor = null;
-        Log.d("LAB05-MAIN","PROYECTO : _"+idPry.toString()+" - "+ _SQL_TAREAS_X_PROYECTO);
+        Log.d("LAB06-MAIN","PROYECTO : _"+idPry.toString()+" - "+ _SQL_TAREAS_X_PROYECTO);
         cursor = db.rawQuery(_SQL_TAREAS_X_PROYECTO,new String[]{idPry.toString()});
         return cursor;
     }

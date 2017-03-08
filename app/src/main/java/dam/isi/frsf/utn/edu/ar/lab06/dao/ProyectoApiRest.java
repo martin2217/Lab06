@@ -1,10 +1,10 @@
-package dam.isi.frsf.utn.edu.ar.lab05.dao;
+package dam.isi.frsf.utn.edu.ar.lab06.dao;
 
 import org.json.JSONObject;
 
 import java.util.List;
 
-import dam.isi.frsf.utn.edu.ar.lab05.modelo.Proyecto;
+import dam.isi.frsf.utn.edu.ar.lab06.modelo.Proyecto;
 
 /**
  * Created by Martin on 20/10/2016.
