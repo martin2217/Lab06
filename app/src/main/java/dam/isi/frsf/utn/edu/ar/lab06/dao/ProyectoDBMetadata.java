@@ -8,7 +8,7 @@ import android.provider.BaseColumns;
 public class ProyectoDBMetadata {
 
     public static final int VERSION_DB = 1;
-    public static final String NOMBRE_DB= "lab05.db";
+    public static final String NOMBRE_DB= "lab06.db";
     public static final String TABLA_PROYECTO= "PROYECTO";
     public static final String TABLA_PROYECTO_ALIAS= " pry";
     public static final String TABLA_USUARIOS= "USUARIOS";

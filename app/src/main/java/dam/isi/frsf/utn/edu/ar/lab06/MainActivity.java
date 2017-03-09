@@ -92,6 +92,10 @@ public class MainActivity extends AppCompatActivity {
             intActAlta.putExtra("ID_TAREA", 0);
             startActivity(intActAlta);
         }
+        else if (id == R.id.proyectos){
+            Intent intActAlta= new Intent(MainActivity.this, ProyectosActivity.class);
+            startActivity(intActAlta);
+        }
 
         return super.onOptionsItemSelected(item);
     }

@@ -7,4 +7,9 @@
         android:orderInCategory="100"
         android:title="@string/desvios"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/proyectos"
+        android:orderInCategory="100"
+        android:title="@string/proyectosTitle"
+        app:showAsAction="never" />
 </menu>

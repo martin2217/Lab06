@@ -61,18 +61,30 @@
         android:progress="0"
         android:indeterminate="false" />
 
-    <TextView
+
+    <LinearLayout android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Responsable: "
+            android:id="@+id/textView5" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text=""
+            android:id="@+id/textViewResponsable" />
+    </LinearLayout>
+
+
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Responsable"
-        android:id="@+id/textView5" />
-
-    <Spinner
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/responsablesSpinner"
-        android:layout_weight="0.11" />
+        android:text="Seleccionar contacto"
+        android:id="@+id/btnElegirContacto" />
 
     <TextView
         android:layout_width="wrap_content"

@@ -66,7 +66,7 @@ public class ProyectoDAO {
         }
         cursorPry.close();
         Cursor cursor = null;
-        Log.d("LAB06-MAIN","PROYECTO : _"+idPry.toString()+" - "+ _SQL_TAREAS_X_PROYECTO);
+        Log.d("LAB05-MAIN","PROYECTO : _"+idPry.toString()+" - "+ _SQL_TAREAS_X_PROYECTO);
         cursor = db.rawQuery(_SQL_TAREAS_X_PROYECTO,new String[]{idPry.toString()});
         return cursor;
     }
@@ -83,6 +83,15 @@ public class ProyectoDAO {
         valores.put(ProyectoDBMetadata.TablaTareasMetadata.PROYECTO, tarea.getProyecto().getId());
 
         db.insert(ProyectoDBMetadata.TABLA_TAREAS, null, valores);
+    }
+
+    public void nuevoUsuario(String nombreUsuario){
+        db = dbHelper.getWritableDatabase();
+        // Create a new map of values, where column names are the keys
+        ContentValues valores = new ContentValues();
+        valores.put(ProyectoDBMetadata.TablaUsuariosMetadata.USUARIO, nombreUsuario);
+
+        db.insert(ProyectoDBMetadata.TABLA_USUARIOS, null, valores);
     }
 
     public void actualizarTarea(Tarea tarea){
